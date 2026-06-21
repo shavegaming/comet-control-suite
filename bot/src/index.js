@@ -14,6 +14,7 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     commands.push(command.data.toJSON());
     client.commands.set(command.data.name, command);
+    client.commands = new Map();
 }
 
 client.once('ready', async () => {
