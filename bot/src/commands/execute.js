@@ -1,5 +1,17 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const { sendToBackend } = require('../utils/api');
+const sendToBackend = async (route, payload) => {
+    try {
+        const res = await fetch(process.env.BACKEND_URL + route, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        return await res.json();
+    } catch (err) {
+        return { success: false, reason: err.message };
+    }
+};
 
 module.exports = {
     data: new SlashCommandBuilder()
